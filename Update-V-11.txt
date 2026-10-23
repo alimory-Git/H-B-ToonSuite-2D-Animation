@@ -1,0 +1,24 @@
+Implemented the camera filter and tangents, removed the image curves, and fixed slow playback in `H-B_ToonSuite_v11.html`. Tests were performed in a test browser.
+
+Camera Filter in the Timeline
+
+- Added three options to the Keys menu: Cam Move, Cam Zoom, and Cam Rotate.
+- Tested with three camera keys. Cam Zoom displayed keys 0 and 40, Cam Rotate displayed keys 0 and 20, and Cam Move displayed all three keys.
+
+Graph Editor
+
+- Added a Camera button to the filter alongside Move and Rotate. Added four channel rows to the channel list: Camera X, Y, Zoom, and Rotate. Click = select only this channel, Shift = add to selection, Ctrl = remove from selection.
+- Camera Tangents: Tangents can be selected by clicking a camera keyframe. The Auto, Spline, Clamped, Linear, Flat, Stepped, and Plateau buttons (as well as the right-click context menu) apply to that keyframe. In testing, Spline changed the X value at frame 10 from 1080 to 1095.
+- Handles: Two handles, incoming and outgoing, are displayed for the selected keyframe. Dragging a handle switches the tangent to Free mode. This was tested with the outgoing handle.
+- Tangents are saved with the project and remain intact when using Set Key on the same keyframe.
+- The Switch (item) and Image (frame) curves have been removed from the graph.
+
+Playback Performance with Subdivision 8 (192×192)
+
+Two causes of slow playback were identified:
+
+- Evaluating each frame copied a 74,000-element grid. This copy took 10 ms per frame. It has been reduced to 1.4 ms. Also, when rendering reads directly from the mesh, it no longer performs cubic sampling for every point.
+- When the cache filled up, it discarded the oldest frames. During looped playback, this meant no frames could be found in the cache. Now, frames are no longer discarded when the cache is full, and the cache is automatically cleared whenever a keyframe changes.
+- The cache now has a capacity of 768 MB. This value can be changed using the input box next to the ⟳ button. Current usage is also displayed in the timeline bar's tooltip. If the cache becomes full, a FULL warning appears there and in the message next to the ⟳ button.
+- Cached playback images are now limited to approximately 1.6 megapixels to allow more frames to fit in the cache.
+- In testing, per-frame evaluation time dropped from approximately 10 ms to 0.8 ms. The test browser used software rendering. Rendering will be faster on your graphics card, so your results may differ.
