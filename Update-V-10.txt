@@ -1,0 +1,25 @@
+H-B ToonSuite v10: Release Notes
+What's new in this version
+Clay (deformation tool)
+Compact floating toolbox: The Clay panel is smaller and can be moved by dragging its title. The "?" button shows or hides a quick guide.
+One-click brush modes: Erase, Smooth and a Mask pen. Softness runs from 0 (hard edge) to 100 (very soft), and the mouse wheel changes the brush size.
+Smooth out wrinkles with a colored mask: Paint the area you want with the Mask pen, then press Clear to remove the mask.
+Mesh density up to 16×: Ideal for objects such as ropes that need a very fine mesh. Density is set once per layer and then locked. Changing it later warns you that all Clay keys on that layer will be deleted. If the mesh is already at its maximum, the image is drawn on a finer, smoothed grid so edges stay round.
+Show mesh: The Show mesh switch remembers whether it was on or off.
+Key every vertex: Double-clicking the timeline, or using Set Key while Clay is active, keys every vertex of the mesh.
+Reset button: Neutralizes the Clay effect only at the current frame, or only at the selected keys.
+Optimize button: Removes redundant keys and tiny offsets, so files are smaller and playback is faster.
+Cache and performance
+A cache bar now sits below the timeline. The ⟳ button fills the cache, and clicking it again stops the process. You can also clear the cache.
+It keeps playback smooth on heavy meshes.
+Layer linking (Link)
+Unlink from a frame: Before that frame, the child layer still follows its parent. From that frame on, it is free. No extra keys are created.
+Graph Editor
+Camera curves: The Camera button shows the X, Y, Zoom and Rotate curves of the selected camera, with the value written at every key. Dragging a point up or down changes its value, and dragging sideways moves the key in time.
+Saving and project safety
+Auto Save: You choose the interval in minutes, the number of files and the folder on your computer. After the last file, the oldest one is replaced. Saving happens in the background and doesn't interrupt your work. Save now and Reset buttons are in the same window.
+Session recovery: After a crash or an unexpected shutdown, the app offers to restore your project the next time you open it.
+Confirmation before closing: The app asks you to confirm before it closes.
+Project Reset: Starts a fresh project after you confirm.
+Windows builds
+This version is available as separate 32-bit and 64-bit .exe files. No installation is needed: just double-click to run.
