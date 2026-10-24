@@ -1,0 +1,35 @@
+Everything has been implemented in `H-B_ToonSuite_v12.html`, except that I haven’t tested the close dialog in the desktop application (Electron), as explained below. All tests were performed in a test browser.
+
+## Clay Layer Selection
+
+- The selected layer is now the one that gets clayed. Previously, Clay would stick to the previous layer and ignore the selection made from the layer column. This issue was reproduced during testing and fixed.
+- If multiple layers are selected, or only a folder is selected, the layer under the mouse cursor is clayed.
+- It also works in Spread mode. Alt-clicking the second layer selected it, and Clay was applied to that same layer.
+- I didn’t test the “folder switching” mode separately. Testing was done with a regular folder (Master).
+
+## Clay Settings
+
+- Under **Settings > Project > Clay**: controls for the opacity of the color inside the brush circle and the mask color opacity.
+- The mask color is located in the **Colors** tab (this was already available).
+- The Clay panel now has a **Circle** slider to control the circle’s opacity and a **Hide** checkbox next to the mask. Hide only hides the color; the mask continues to protect the masked area.
+
+## Undo/Redo
+
+- Undo and Redo now work efficiently with Clay. Clay images and meshes are stored only once, making snapshots much smaller (around 1 KB instead of a full copy).
+- Tested: moving layers, deleting a layer (the images are restored), multiple Clay strokes on a 192×192 mesh—even after clicking the panel slider—and camera undo.
+- I couldn’t directly test folder deletion because the script didn’t take a snapshot before deleting the folder. Deleting an individual layer was tested.
+- **Important bug fix:** Loading a project and then using Undo caused Clay animation keyframes to be lost. This was a pre-existing bug, and it has now been fixed. Saving and reloading a project now preserves Clay keyframes (tested).
+- Settings changes and free scene navigation (zoom and pan) are not included in Undo.
+
+## Colors and Grid
+
+- The defaults have been changed: scene (Frame fill) to 200/200/200 and the area outside the frame (surround) to 80/100/120. I assumed “background” meant the area inside the frame. I did not change the application’s own Background color. If you meant that instead, please let me know.
+- If you haven’t previously customized the colors, they will automatically switch to the new defaults.
+- A subtle grid, similar to those in 3D applications, has been added to the scene, with faint red horizontal and green vertical center lines. All grid settings are available under **Settings > Project** (spacing, major grid line interval, opacity, thickness, and snap step). Grid colors are configurable in the **Colors** tab.
+- There is now a **Grid** button and a **Snap** checkbox at the top of the scene, next to the zoom controls. When Snap is enabled, layers or folders snap to the grid as you move them. The layer’s center point snaps relative to the center of the frame. In testing, with a spacing of 100, the layer snapped to `-100, 0`.
+- Snapping applies only to movement. If a layer is rotated and moved along its local axis, it does not snap along that axis.
+
+## Closing the Application
+
+- In the desktop application, clicking the X button should display four options: **Save**, **Reset**, **Open…**, and **Cancel**. I ran the dialog during testing and confirmed that all four buttons were present.
+- This functionality will not work in the browser alone; the desktop application needs to be modified. I don’t currently have the Electron project. You need to add the following to `main.js` to connect the window’s close button to the dialog:
